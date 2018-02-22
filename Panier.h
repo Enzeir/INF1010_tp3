@@ -18,23 +18,30 @@ class Panier
 {
 public:
 	
+	//Constructeur par defaut
 	Panier(int idClient);
+	//destructeur par defaut
 	~Panier();
 
+	//Methode d'acces
 	vector<Produit*>  obtenirContenuPanier()const;
 	int obtenirNombreContenu() const;
 	double obtenirTotalApayer() const;
 	double calculerTotalApayer() const ;
 	int obtenirIdClient() const;
 
+	// Methode de modification
 	void modifierTotalAPayer(double totalAPayer);
 	void modifierIdClient(int idClient);
 
-	// TODO : Cette methode est a modifier
+	//Methode qui ajoute un produit au vecteur de produit
 	void ajouter(Produit * prod);
+	//Methode vide et detruit le contenu du vecteur de produit
 	void livrer();
 
+	//Methode qui traverse tous les produits du vecteur et determine celui qui a le prix le plus elever
 	Produit* trouverProduitPlusCher();
+	//Surcharge d'operateur d'affichage
 	friend ostream& operator<<(ostream& os, const Panier & panier);
 
 private:

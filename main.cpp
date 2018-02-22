@@ -17,10 +17,12 @@ const int  NB_PRODUCTS = 15;
 
 /**
 *Répondez aux questions ici :
-* 1/
+* 1/ Parce que ProduitOrdinire et ProduitAux Enchere sont des produits
 * 2/
-* 2.1
-* 2.2
+* 2.1 Un static_cast permet d'utiliser la surcharge d'operateur << d'une classe parent.
+* 2.2 On aura une methode d'affichage qui affichera juste les attributs de l'objet de la classe
+*	  sans afficher ceux de la classe parent ou il faudrat gerer l'affichage a travers les methodes d'acces de la classe parents
+*	  en faisant attention a ce que l'affiche des deux classe respecte la meme structure. 
 **/
 
 int main()
@@ -67,24 +69,25 @@ int main()
 	// Afficher Panier du client
 	cout << martine;
 
+	
 	// afficher le fournisseur
 	cout << poly;
-
+	
 	// Client mise sur le produit aux encheres 
 	martine.miserProduit(prodAuxEncheres, 500);
 
 	// afficher le produit aux enchères
 	cout << *prodAuxEncheres << endl;
-
+	
 	// Ma copie mise aussi  sur le produit  aux enchères
 	maCopie.miserProduit(prodAuxEncheres, 555);
-
+	
 	// afficher le produit aux enchères
 	cout << *prodAuxEncheres << endl;
-
+	
 	// Afficher Panier du client
 	cout << martine << endl;
-
+	
 	// trouver le produit le plus cher du panier
 	cout << " Produit le plus cher "<< *martine.obtenirPanier()->trouverProduitPlusCher();
 	
@@ -100,4 +103,5 @@ int main()
 	}
 	delete prodAuxEncheres;
 	
+	system("pause");
 }

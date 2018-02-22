@@ -7,19 +7,21 @@
 #include "Client.h"
 #include "Fournisseur.h"
 
-
+//constructeur par parametre
 Client::Client(const string & nom, const string & prenom, int identifiant, const string & codePostal, long date) : Usager(nom, prenom, identifiant, codePostal)
 {
 	dateNaissance_ = date;
 	monPanier_ = nullptr;
 }
 
+//destructeur par defaut
 Client::~Client()
 {
 	if (monPanier_ != nullptr)
 		delete monPanier_;
 }
 
+//constructeur par copie
 Client::Client(const Client & client) :
 	Usager(client.obtenirNom(), client.obtenirPrenom(), client.obtenirIdentifiant(), client.obtenirCodePostal()),	
 	dateNaissance_{ client.dateNaissance_ }
@@ -35,7 +37,6 @@ Client::Client(const Client & client) :
 		monPanier_->modifierTotalAPayer(client.monPanier_->obtenirTotalApayer());
 	}
 }
-
 
 // Methodes d'acces
 long Client::obtenirDateNaissance() const
@@ -67,6 +68,7 @@ void Client::acheter(ProduitOrdinaire * prod)
 	prod->obtenirFournisseur().noter(note);
 }
 
+//vide et detruit le panier du client
 void Client::livrerPanier()
 {
 	monPanier_->livrer();
@@ -74,25 +76,31 @@ void Client::livrerPanier()
 	monPanier_ = nullptr;
 }
 
-
+//methode qui verifie si le montant mise est superieur a celui du prix actuel
+//et l'ajoute au panier.
 void Client::miserProduit(ProduitAuxEncheres* produitAuxEncheres, double montantMise) {
-	// à faire
-	if (produitAuxEncheres->obtenirPrixBase() < montantMise)
+
+	if (produitAuxEncheres->obtenirPrix() < montantMise)
 	{
 		produitAuxEncheres->modifierPrix(montantMise);
 		produitAuxEncheres->modifierIdentifiantClient(this->obtenirIdentifiant());
 		if (monPanier_ == nullptr)
 		{
-			monPanier_->ajouter(produitAuxEncheres);
+			monPanier_ = new Panier(this->obtenirIdentifiant());
 		}
+		monPanier_->ajouter(produitAuxEncheres);
+
 	}
 }
 
+//surcharge d'operateur d'affectation
 Client & Client::operator=(const Client & client)
 {
 	if (this != &client) {
-		Usager temp(*this);
-		temp = static_cast<Usager> (client);
+		this->modifierNom(client.obtenirNom());
+		this->modifierPrenom(client.obtenirPrenom());
+		this->modifierIdentifiant(client.obtenirIdentifiant());
+		this->modifierCodePostal(client.obtenirCodePostal());
 		dateNaissance_ = client.obtenirDateNaissance();
 		if (client.monPanier_ != nullptr) {
 			delete monPanier_;
@@ -107,13 +115,13 @@ Client & Client::operator=(const Client & client)
 	return *this;
 }
 
-
+//surcharge d'operateur d'affichage
 ostream & operator<<(ostream & os, const Client & client)
 {
-	// à faire
+	os << static_cast<Usager> (client);
 	if (client.monPanier_ == nullptr)
 	{
-		os << "Mr./Mme." << client.obtenirNom() <<  ", votre Panier est vide!" << endl;
+		os << "Le panier de " << client.obtenirPrenom() << " est vide!" << endl;
 	}
 	else
 	{

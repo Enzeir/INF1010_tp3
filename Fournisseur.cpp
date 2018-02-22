@@ -5,6 +5,7 @@
 *******************************************/
 #include "Fournisseur.h"
 
+//constructeur par parametre
 Fournisseur::Fournisseur(const string & nom, const string & prenom, int identifiant, const string & codePostal) : Usager(nom, prenom, identifiant, codePostal)
 {
 	for (unsigned i = 0; i < NIVEAUX_SATISFACTION; i++)
@@ -13,6 +14,7 @@ Fournisseur::Fournisseur(const string & nom, const string & prenom, int identifi
 	}
 }
 
+//methodes d'accees
 vector<Produit*> Fournisseur::obtenirCatalogue() const
 {
 	return contenuCatalogue_;
@@ -23,6 +25,7 @@ Satisfaction Fournisseur::obtenirSatisfaction() const
 	return satisfaction_;
 }
 
+//methode de modification
 void Fournisseur::modifierSatisfaction(Satisfaction satisfaction)
 {
 	for (unsigned i = 0; i < NIVEAUX_SATISFACTION; i++)
@@ -36,11 +39,13 @@ void Fournisseur::noter(int appreciation)
 	satisfaction_.niveaux_[appreciation]++;
 }
 
+//methode qui ajoute un produit au vecteur du fournisseur
 void Fournisseur::ajouterProduit(Produit * produit)
 {
 	contenuCatalogue_.push_back(produit);
 }
 
+//methode qui enleve un produit au vecteur du fournisseur
 void Fournisseur::enleverProduit(Produit * produit)
 {
 	for (unsigned i = 0; i < contenuCatalogue_.size(); i++)
@@ -52,6 +57,7 @@ void Fournisseur::enleverProduit(Produit * produit)
 	}
 }
 
+//surcharge de l'operateur d'affectation
 Fournisseur & Fournisseur::operator=(const Fournisseur & fournisseur)
 {
 	if (this != &fournisseur)
@@ -68,15 +74,15 @@ Fournisseur & Fournisseur::operator=(const Fournisseur & fournisseur)
 
 }
 
+//surcharge de l'operateur affichage
 ostream & operator<<(ostream & os, Fournisseur & fournisseur)
 {
-	// TODO: insérer une instruction return ici
-	os << "Produit le plus cher " << static_cast<Produit> (fournisseur) << endl;
 	os << "Fournisseur: " << static_cast<Usager> (fournisseur) << endl;
-	os << "Notes: " << endl;
+	os << "\tNotes: " << endl;
 	for (unsigned i = 0; i < NIVEAUX_SATISFACTION; i++)
 	{
-		os << i << " : " << fournisseur.obtenirSatisfaction().niveaux_[i] << endl;
+		os << "\t" << i << " : " << fournisseur.obtenirSatisfaction().niveaux_[i] << endl;
 	}
+	os << endl;
 	return os;
 }

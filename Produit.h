@@ -42,7 +42,10 @@ public:
 	bool operator <(const Produit& produit) const;
 	bool operator ==(const Produit& produit) const;
 	
+	//surcharge d'operateur d'entree de valeur
 	friend istream& operator>>(istream& is, Produit& produit);
+
+	//surcharge d'operateur d'affichage
     friend ostream& operator<<(ostream& os, const Produit& produit);
    
 private :

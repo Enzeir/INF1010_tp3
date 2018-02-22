@@ -7,6 +7,7 @@
 #ifndef USAGER_H
 #define USAGER_H
 
+#include <iostream>
 #include <string>
 using namespace std;
 class Usager

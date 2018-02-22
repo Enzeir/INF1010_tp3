@@ -32,11 +32,9 @@ void ProduitOrdinaire::modifierEstTaxable(bool estTaxable)
 
 ostream & operator<<(ostream & os, const ProduitOrdinaire & produit)
 {
-	os << "nom: "<< produit.obtenirNom() << endl;
-	os << "\tref: " << produit.obtenirReference() << endl;
-	os << "\tprix actuel: " << produit.obtenirPrix() << endl;
-	os << "\tFournisseur: " << produit.obtenirFournisseur();
-	os << "\test Taxable: " << produit.obtenirEstTaxable();
+	os << static_cast<Produit>(produit) << endl;
+	os << "\test Taxable: " << boolalpha;
+	os << produit.obtenirEstTaxable() << endl << endl;
 	return os;
 }
 

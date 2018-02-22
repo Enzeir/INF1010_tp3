@@ -14,7 +14,6 @@ Produit::Produit(Fournisseur& fournisseur,const string& nom, int reference, doub
 //destructeur par defaut
 Produit::~Produit() 
 {
-	// à faire
 	fournisseur_.enleverProduit(this);
 }
 
@@ -76,6 +75,7 @@ bool Produit::operator==(const Produit & produit) const
 			prix_ == produit.prix_ &&
 			reference_ == produit.reference_);
 }
+
 // pour lire un type enumeré
 inline istream & operator >> (istream & is, TypeProduit & typeProduit) {
 	unsigned int type = 0;
@@ -84,19 +84,19 @@ inline istream & operator >> (istream & is, TypeProduit & typeProduit) {
 	return is;
 }
 
+//surcharge d'operateur d'entree de valeur
 istream & operator>>(istream & is, Produit & produit)
 {
 	return is >> produit.nom_ >> produit.reference_ >> produit.prix_ >> produit.type_;
 }
 
+//surcharge d'operateur d'affichage
  ostream & operator<<(ostream & os, const Produit & produit)
 {
 	 os << "Produit :"
 		 << " nom: " << produit.obtenirNom() << endl
 		 << " \t \t ref : " << produit.obtenirReference() << endl
 		 << " \t \t prix actuel : " << produit.obtenirPrix() << endl
-		 << "\t Fournisseur " << produit.obtenirFournisseur().obtenirNom() << endl;
+		 << "\t Fournisseur " << produit.obtenirFournisseur().obtenirNom();
 	 return os;
 }
-
-
