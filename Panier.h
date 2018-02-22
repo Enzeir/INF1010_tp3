@@ -16,7 +16,6 @@ const double TAUX_TAXE = 0.15;
 using namespace std;
 class Panier
 {
-
 public:
 	
 	Panier(int idClient);

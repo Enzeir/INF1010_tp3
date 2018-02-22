@@ -9,6 +9,8 @@ using namespace std;
 
 Panier::Panier(int idClient) {
 	// TODO
+	totalAPayer_ = 0.0;
+	idClient_ = idClient;
 }
 
 
@@ -41,6 +43,26 @@ double Panier::obtenirTotalApayer() const {
 double Panier::calculerTotalApayer()  const
 {
 	 // TODO
+	double total = 0;
+	if (contenuPanier_.empty())
+	{
+		total = 0;
+	}
+	else
+	{
+		for (unsigned i = 0; i < contenuPanier_.size(); i++)
+		{
+			if (contenuPanier_[i]->retournerType() == TypeProduitAuxEncheres)
+			{
+				if (static_cast<ProduitAuxEncheres*>(contenuPanier_[i])->obtenirIdentifiantClient() 
+					== idClient_)
+				{
+					total += contenuPanier_[i]->obtenirPrix();
+				}
+			}
+		}
+	}
+	return total;
 }
 
 
@@ -61,7 +83,11 @@ void Panier::modifierIdClient(int idClient) {
 void Panier::ajouter(Produit * prod)
 {
 	// TODO
-
+	double prixTaxe = prod->obtenirPrix() + (prod->obtenirPrix() * TAUX_TAXE);
+	if (static_cast<ProduitOrdinaire*> (prod)->obtenirEstTaxable())
+	{
+		prod->modifierPrix(prixTaxe);
+	}
 	contenuPanier_.push_back(prod);
 }
 
@@ -87,6 +113,23 @@ Produit* Panier::trouverProduitPlusCher()
 ostream & operator<<(ostream & os,  const Panier & panier)
 {
 	// TODO
-
-	
+	if (panier.contenuPanier_.empty())
+	{
+		os << "Votre Panier est vide" << endl;
+	}
+	else
+	{
+		for (unsigned i = 0; i < panier.contenuPanier_.size(); i++)
+		{
+			if (panier.contenuPanier_[i]->retournerType() == TypeProduitOrdinaire)
+			{
+				os << static_cast<ProduitOrdinaire*> (panier.contenuPanier_[i]);
+			}
+			if (panier.contenuPanier_[i]->retournerType() == TypeProduitAuxEncheres)
+			{
+				os << static_cast<ProduitAuxEncheres*> (panier.contenuPanier_[i]);
+			}
+		}
+	}
+	return os;	
 }

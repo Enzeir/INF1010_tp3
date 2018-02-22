@@ -6,16 +6,8 @@
 
 #include "ProduitAuxEncheres.h"
 
-ProduitAuxEncheres::ProduitAuxEncheres()
+ProduitAuxEncheres::ProduitAuxEncheres(Fournisseur & fournisseur, const string & nom, int reference, double prix, TypeProduit type) : Produit(fournisseur, nom, reference, prix, type)
 {
-	Produit();
-	prixBase_ = 0;
-	identifiantClient_ = 0;
-}
-
-ProduitAuxEncheres::ProduitAuxEncheres(Fournisseur & fournisseur, const string & nom, int reference, double prix, TypeProduit type)
-{
-	Produit(fournisseur, nom, reference, prix, type);
 	prixBase_ = 0;
 	identifiantClient_ = 0;
 }

@@ -5,17 +5,13 @@
 *******************************************/
 
 #include "Produit.h"
-
-Produit::Produit(Fournisseur& fournisseur,const string& nom, int reference, double prix,TypeProduit type)
+//constructeur par parametre
+Produit::Produit(Fournisseur& fournisseur,const string& nom, int reference, double prix,TypeProduit type) : fournisseur_(fournisseur), nom_(nom), reference_(reference), prix_(prix), type_(type)
 {
-	fournisseur_ = fournisseur;
-	nom_ = nom;
-	reference_ = reference;
-	prix_ = prix;
-	type_ = type;
+	fournisseur_.ajouterProduit(this);
 }
 
-
+//destructeur par defaut
 Produit::~Produit() 
 {
 	// à faire
@@ -63,7 +59,7 @@ void Produit::modifierPrix(double prix)
 	prix_ = prix;
 }
 
-
+//surcharge d'operateur
 bool Produit::operator>(const Produit & produit) const
 {
 	return prix_ > produit.prix_;

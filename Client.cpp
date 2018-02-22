@@ -64,8 +64,7 @@ void Client::acheter(ProduitOrdinaire * prod)
 	// obtenir une note aléatoire
 	int note = rand() % NIVEAUX_SATISFACTION;
 	// faire la mise à jour de la satisfaction au fournisseur
-	
-	
+	prod->obtenirFournisseur().noter(note);
 }
 
 void Client::livrerPanier()
@@ -78,7 +77,15 @@ void Client::livrerPanier()
 
 void Client::miserProduit(ProduitAuxEncheres* produitAuxEncheres, double montantMise) {
 	// à faire
-	
+	if (produitAuxEncheres->obtenirPrixBase() < montantMise)
+	{
+		produitAuxEncheres->modifierPrix(montantMise);
+		produitAuxEncheres->modifierIdentifiantClient(this->obtenirIdentifiant());
+		if (monPanier_ == nullptr)
+		{
+			monPanier_->ajouter(produitAuxEncheres);
+		}
+	}
 }
 
 Client & Client::operator=(const Client & client)
@@ -103,6 +110,14 @@ Client & Client::operator=(const Client & client)
 
 ostream & operator<<(ostream & os, const Client & client)
 {
-	
 	// à faire
+	if (client.monPanier_ == nullptr)
+	{
+		os << "Mr./Mme." << client.obtenirNom() <<  ", votre Panier est vide!" << endl;
+	}
+	else
+	{
+		os << *client.monPanier_ << endl;
+	}
+	return os;
 }
